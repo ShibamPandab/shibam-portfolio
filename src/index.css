@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", var(--font-sans);
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Base resets & setups */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #050505;
+  color: #FFFFFF;
+}
+
+/* Hide cursor on desktop when CustomCursor is active */
+@media (pointer: fine) {
+  html.no-cursor,
+  html.no-cursor * {
+    cursor: none !important;
+  }
+}
+
+/* Luxury selection color (Gold text, black background or vice versa) */
+::selection {
+  background-color: #D4AF37;
+  color: #050505;
+}
+
+/* Custom Scrollbar - Minimal luxury fashion style */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #202020;
+  border-radius: 4px;
+  border: 2px solid #050505;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D4AF37;
+}
+
+/* Mesh Gradients */
+.bg-mesh-gradient {
+  background: radial-gradient(circle at 70% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 40%),
+              radial-gradient(circle at 10% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+              #050505;
+}
+
+.mesh-gradient {
+  background: radial-gradient(circle at 70% 30%, rgba(212, 175, 55, 0.1) 0%, transparent 40%),
+              radial-gradient(circle at 10% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+}
+
+/* Custom glass card utilities and styling rules for the "Frosted Glass" design theme */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  box-shadow: 0 10px 40px -15px rgba(212, 175, 55, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Gold gradients */
+.gold-gradient {
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+}
+
+.gold-text {
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Gold text gradient utilities */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #D4AF37 0%, #FFD700 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Subtle glow pulse */
+@keyframes gold-pulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.05);
+  }
+}
+
+.animate-gold-glow {
+  animation: gold-pulse 8s ease-in-out infinite;
+}
