@@ -8,6 +8,7 @@ export default function Contact() {
   const [errors, setErrors] = useState({ name: '', email: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   // Validate form
   const validateForm = () => {
@@ -44,18 +45,35 @@ export default function Contact() {
   };
 
   // Submit Handler
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     setIsSubmitting(true);
+    setSubmitError('');
 
-    // Simulate sending message securely over network
-    setTimeout(() => {
+    try {
+      const response = await fetch('https://formspree.io/f/xaqzwdzp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setIsSuccess(true);
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        const data = await response.json();
+        setSubmitError(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      setSubmitError('Failed to send message. Please check your connection.');
+    } finally {
       setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({ name: '', email: '', message: '' });
-    }, 1800);
+    }
   };
 
   return (
@@ -256,6 +274,10 @@ export default function Contact() {
                   {errors.message && <span className="font-mono text-[9px] text-red-400 tracking-wider mt-1">{errors.message}</span>}
                 </div>
 
+                {submitError && (
+                  <p className="font-mono text-[9px] text-red-400 text-center tracking-wider mt-2">{submitError}</p>
+                )}
+
                 {/* Button */}
                 <button
                   type="submit"
@@ -299,7 +321,7 @@ export default function Contact() {
                     </h4>
                     
                     <p className="mt-3 text-neutral-400 text-xs sm:text-sm leading-relaxed max-w-sm font-sans mx-auto">
-                      Thank you. Your message has been sent successfully. Shibam will review it and reply within 24 hours.
+                      Message sent successfully. I'll get back to you soon.
                     </p>
 
                     <button
