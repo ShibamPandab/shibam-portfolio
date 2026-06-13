@@ -136,3 +136,248 @@ html {
 .animate-gold-glow {
   animation: gold-pulse 8s ease-in-out infinite;
 }
+
+/* ═══════════════════════════════════════════════════
+   PROJECT VAULT — Premium section animations & styles
+   ═══════════════════════════════════════════════════ */
+
+/* Nucleus ring expand/contract */
+@keyframes nucleus-ring {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.25;
+  }
+}
+
+/* Nucleus outer halo breathe */
+@keyframes nucleus-halo {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.15;
+  }
+  50% {
+    transform: scale(1.18);
+    opacity: 0.04;
+  }
+}
+
+/* Nucleus inner core shimmer */
+@keyframes nucleus-core {
+  0%, 100% {
+    box-shadow: 0 0 40px 12px rgba(212,175,55,0.35),
+                0 0 80px 30px rgba(212,175,55,0.12),
+                0 0 120px 50px rgba(212,175,55,0.04);
+  }
+  50% {
+    box-shadow: 0 0 55px 18px rgba(212,175,55,0.55),
+                0 0 110px 45px rgba(212,175,55,0.18),
+                0 0 160px 70px rgba(212,175,55,0.06);
+  }
+}
+
+/* Slow spin for nucleus orbital rings */
+@keyframes nucleus-spin-cw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes nucleus-spin-ccw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+
+/* Card orbit float — each card gets a unique delay to feel independent */
+@keyframes vault-float-a {
+  0%, 100% { transform: translateY(0px)   translateX(0px); }
+  33%       { transform: translateY(-14px) translateX(4px); }
+  66%       { transform: translateY(6px)  translateX(-6px); }
+}
+@keyframes vault-float-b {
+  0%, 100% { transform: translateY(0px)   translateX(0px); }
+  33%       { transform: translateY(10px)  translateX(-8px); }
+  66%       { transform: translateY(-8px)  translateX(5px); }
+}
+@keyframes vault-float-c {
+  0%, 100% { transform: translateY(0px)   translateX(0px); }
+  40%       { transform: translateY(-10px) translateX(6px); }
+  70%       { transform: translateY(8px)   translateX(-4px); }
+}
+
+/* Gold border shimmer sweep */
+@keyframes shimmer-sweep {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Vault card reveal on scroll */
+@keyframes vault-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Vault section background radial sweep */
+@keyframes vault-bg-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+/* ── Nucleus ── */
+.vault-nucleus {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.vault-nucleus-core {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,175,55,0.9) 0%, rgba(212,175,55,0.55) 30%, rgba(212,175,55,0.15) 70%, transparent 100%);
+  animation: nucleus-core 4s ease-in-out infinite;
+}
+
+.vault-nucleus-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,0.5);
+  animation: nucleus-ring 4s ease-in-out infinite;
+}
+
+.vault-nucleus-halo {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,175,55,0.25) 0%, transparent 70%);
+  animation: nucleus-halo 6s ease-in-out infinite;
+}
+
+/* ── Vault Card ── */
+.vault-card {
+  /* NOTE: position is NOT absolute here — the outer wrapperDiv handles
+     absolute placement in the universe. This keeps float + parallax
+     transforms cleanly separated. */
+  background: rgba(10, 10, 10, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 20px;
+  overflow: hidden;
+  transition:
+    box-shadow 0.5s cubic-bezier(0.23, 1, 0.32, 1),
+    border-color 0.35s ease;
+}
+
+.vault-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(212,175,55,0.06) 40%,
+    rgba(212,175,55,0.12) 50%,
+    rgba(212,175,55,0.06) 60%,
+    transparent 100%
+  );
+  background-size: 250% auto;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vault-card:hover::before {
+  opacity: 1;
+  animation: shimmer-sweep 1.8s linear infinite;
+}
+
+.vault-card:hover {
+  border-color: rgba(212,175,55,0.42);
+  box-shadow:
+    0 0 0 1px rgba(212,175,55,0.12),
+    0 24px 64px -16px rgba(212,175,55,0.28),
+    0 0 90px -22px rgba(212,175,55,0.14),
+    0 6px 24px rgba(0,0,0,0.85);
+}
+
+/* ── Spotlight overlay (JS-driven) ── */
+.vault-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 20px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+  background: radial-gradient(
+    ellipse 120px 120px at 50% 30%,
+    rgba(212,175,55,0.08) 0%,
+    transparent 100%
+  );
+}
+
+.vault-card:hover .vault-spotlight {
+  opacity: 1;
+}
+
+/* ── Animated gold border top line ── */
+.vault-card-top-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,175,55,0.6), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 3;
+}
+
+.vault-card:hover .vault-card-top-border {
+  opacity: 1;
+}
+
+/* ── Scroll reveal base state ── */
+.vault-card-reveal {
+  opacity: 0;
+  /* Note: no transform here — float wrapper owns the transform;
+     opacity-only initial state prevents flash before reveal fires */
+}
+
+.vault-card-reveal.is-visible {
+  animation: vault-reveal 0.85s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  animation-fill-mode: both;
+}
+
+/* ── Float animation classes ── */
+.vault-float-a { animation: vault-float-a 7s ease-in-out infinite; }
+.vault-float-b { animation: vault-float-b 8.5s ease-in-out infinite; }
+.vault-float-c { animation: vault-float-c 6.5s ease-in-out infinite; }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .vault-float-a,
+  .vault-float-b,
+  .vault-float-c,
+  .vault-nucleus-core,
+  .vault-nucleus-ring,
+  .vault-nucleus-halo { animation: none !important; }
+
+  .vault-card-reveal.is-visible {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}

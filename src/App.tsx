@@ -7,6 +7,7 @@ import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
+import ProjectVault from './components/ProjectVault';
 import Timeline from './components/Timeline';
 import Services from './components/Services';
 import Achievements from './components/Achievements';
@@ -85,6 +86,9 @@ export default function App() {
               
               {/* Projects / Framer-portfolio and analytics stats */}
               <Projects />
+
+              {/* Project Vault — floating universe of experiments & builds */}
+              <ProjectVault />
               
               {/* Experience Timeline */}
               <Timeline />
